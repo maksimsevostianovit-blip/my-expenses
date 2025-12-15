@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es5",
     "lib": [
       "dom",
@@ -18,9 +19,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "plugins": ["typescript-plugin-css-modules"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
-    "src"
-  ]
+    "src",
+  ],
 }
