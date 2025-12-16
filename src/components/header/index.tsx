@@ -13,29 +13,25 @@ export const Header = () => {
     navigation(route)
   }
 
-  console.log('location', pathname)
-
   return (
-    <>
-      <div className={styles.container}>
-        <LogoSvg />
+    <div className={styles.container}>
+      <LogoSvg />
 
-        <ul className={styles.list}>
-          {LIST_ROUTES.map(({ id, label }) => (
-            <li
-              key={id}
-              onClick={() => handleClickRoute(id)}
-              className={cn(styles.item, {
-                [styles['item--active']]: id === pathname,
-              })}
-            >
-              {label}
-            </li>
-          ))}
-        </ul>
+      <ul className={styles.list}>
+        {LIST_ROUTES.map(({ id, label }) => (
+          <li
+            key={id}
+            onClick={() => handleClickRoute(id)}
+            className={cn(styles.item, {
+              [styles['item--active']]: id === pathname,
+            })}
+          >
+            {label}
+          </li>
+        ))}
+      </ul>
 
-        <div />
-      </div>
-    </>
+      <div />
+    </div>
   )
 }
