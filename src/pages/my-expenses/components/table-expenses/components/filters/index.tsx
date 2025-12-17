@@ -28,7 +28,7 @@ export const Filters = () => {
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    setAnchor(event.target)
+    setAnchor(event.target as HTMLElement | null)
   }
 
   const handlePopoverClose = () => {
