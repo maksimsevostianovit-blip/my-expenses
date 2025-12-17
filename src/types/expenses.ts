@@ -1,8 +1,9 @@
-import { StateCategory } from '@/types/categories'
+import { Category } from '@/types/category'
 
 export interface ExpensesState {
+  id: number
   description: string
-  categories: StateCategory
+  category: Category
   date: string
   amount: string
 }

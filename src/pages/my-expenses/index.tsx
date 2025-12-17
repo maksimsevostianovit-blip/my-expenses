@@ -1,5 +1,5 @@
 import styles from './styles.module.scss'
-import { Table } from './components/table'
+import { TableExpenses } from './components/table-expenses'
 import { Actions } from './components/actions'
 
 export const MyExpensesPage = () => (
@@ -7,7 +7,7 @@ export const MyExpensesPage = () => (
     <div className={styles.title}>Мои расходы</div>
 
     <div className={styles.wrapper}>
-      <Table />
+      <TableExpenses />
       <Actions />
     </div>
   </div>

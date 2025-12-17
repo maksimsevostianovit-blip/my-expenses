@@ -1,4 +1,4 @@
-import { Categories, ListCategory } from '@/types/categories'
+import { Category, ListCategory } from '@/types/category'
 import {
   CarSvg,
   EducationSvg,
@@ -10,32 +10,37 @@ import { OtherSvg } from '@/assents/svg/other'
 
 export const CATEGORIES: ListCategory[] = [
   {
-    id: Categories.Meal,
+    id: Category.All,
+    icon: null,
+    label: 'Все',
+  },
+  {
+    id: Category.Meal,
     icon: <MealSvg />,
     label: 'Еда',
   },
   {
-    id: Categories.Car,
+    id: Category.Car,
     icon: <CarSvg />,
     label: 'Транспорт',
   },
   {
-    id: Categories.Housing,
+    id: Category.Housing,
     icon: <HousingSvg />,
     label: 'Жилье',
   },
   {
-    id: Categories.Entertainments,
+    id: Category.Entertainments,
     icon: <EntertainmentsSvg />,
     label: 'Развлечения',
   },
   {
-    id: Categories.Education,
+    id: Category.Education,
     icon: <EducationSvg />,
     label: 'Образование',
   },
   {
-    id: Categories.Other,
+    id: Category.Other,
     icon: <OtherSvg />,
     label: 'Другое',
   },

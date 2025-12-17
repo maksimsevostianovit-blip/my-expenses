@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 
-export enum Categories {
+export enum Category {
+  All = 'all',
   Meal = 'meal',
   Car = 'car',
   Housing = 'housing',
@@ -10,11 +11,7 @@ export enum Categories {
 }
 
 export interface ListCategory {
-  id: Categories
-  icon: ReactElement
+  id: Category
+  icon: ReactElement | null
   label: string
-}
-
-export interface StateCategory extends ListCategory {
-  selected: boolean
 }

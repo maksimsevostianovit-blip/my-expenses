@@ -1,23 +1,20 @@
 import styles from './styles.module.scss'
-import { CATEGORIES } from '@/constants/categories'
 import { Chip } from '@/components/chip'
 import { Label } from '@/components/label'
 import { DatePicker } from '@mui/x-date-pickers'
 import { Input } from '@/components/input'
 import { Dayjs } from 'dayjs'
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { Categories, StateCategory } from '@/types/categories'
-import { categoryMapping } from '@/pages/my-expenses/components/actions/utils/category-mapping'
+import { Category } from '@/types/category'
 import { NumericFormat } from 'react-number-format'
 import { NumberFormatValues } from 'react-number-format/types/types'
 import { useExpenses } from '@/store/expenses'
+import { CATEGORIES } from '@/constants/categories'
 
 export const Actions = () => {
   const [description, setDescription] = useState('')
-  const [categories, setCategories] = useState<StateCategory[]>(
-    categoryMapping(CATEGORIES)
-  )
-  const [date, setDate] = useState('')
+  const [category, setCategory] = useState<Category | null>(null)
+  const [date, setDate] = useState<Dayjs | null>(null)
   const [amount, setAmount] = useState('')
 
   const { addExpenses } = useExpenses()
@@ -26,29 +23,21 @@ export const Actions = () => {
     setDescription(event.target.value)
   }
 
-  const handleChangeCategories = (id: Categories) => {
-    setCategories((prevState) =>
-      prevState.map((category) => {
-        if (category.id === id) {
-          return { ...category, selected: !category.selected }
-        }
-
-        return category
-      })
-    )
+  const handleChangeCategories = (category: Category) => {
+    setCategory(category)
   }
 
   const handleChangeDate = (date: Dayjs | null) => {
     if (!date) {
-      setDate('')
+      setDate(null)
       return
     }
 
-    setDate(date.format('DD.MM.YYYY'))
+    setDate(date)
   }
 
-  const handleChangeAmount = ({ formattedValue }: NumberFormatValues) => {
-    setAmount(formattedValue)
+  const handleChangeAmount = ({ value }: NumberFormatValues) => {
+    setAmount(value)
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -56,18 +45,18 @@ export const Actions = () => {
 
     addExpenses({
       description,
-      categories,
-      date,
+      category,
+      date: date ? date.format('DD.MM.YYYY') : '',
       amount,
     })
 
     setDescription('')
-    setCategories([])
-    setDate('')
+    setCategory(null)
+    setDate(null)
     setAmount('')
   }
 
-  const isDisabled = !description || !date || !categories.length || !amount
+  const isDisabled = !description || !date || !category || !amount
 
   return (
     <div className={styles.container}>
@@ -76,6 +65,7 @@ export const Actions = () => {
       <form className={styles.wrapper} onSubmit={handleSubmit}>
         <Label label="Описание">
           <Input
+            value={description}
             placeholder="Введите описание"
             onChange={handleChangeDescription}
           />
@@ -83,20 +73,24 @@ export const Actions = () => {
 
         <Label label="Категория">
           <ul className={styles.list}>
-            {categories.map(({ id, icon, label, selected }) => (
-              <Chip
-                key={id}
-                icon={icon}
-                label={label}
-                selected={selected}
-                onClick={() => handleChangeCategories(id)}
-              />
-            ))}
+            {CATEGORIES.map(
+              ({ id, icon, label }) =>
+                icon && (
+                  <Chip
+                    key={id}
+                    icon={icon}
+                    label={label}
+                    selected={id === category}
+                    onClick={() => handleChangeCategories(id)}
+                  />
+                )
+            )}
           </ul>
         </Label>
 
         <Label label="Дата">
           <DatePicker
+            value={date}
             onChange={handleChangeDate}
             enableAccessibleFieldDOMStructure={false}
             slotProps={{
@@ -105,12 +99,12 @@ export const Actions = () => {
             slots={{
               textField: Input,
             }}
-            format="ДД/ММ/ГГГГ"
           />
         </Label>
 
         <Label label="Сумма">
           <NumericFormat
+            value={amount}
             onValueChange={handleChangeAmount}
             customInput={Input}
             thousandSeparator={' '}
