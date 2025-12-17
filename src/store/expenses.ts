@@ -22,7 +22,7 @@ export const useExpenses = create<State>((set) => ({
   expenses: MOCK_EXPANDED,
   filteredExpenses: MOCK_EXPANDED,
 
-  setSelectedSort: Sorting.None,
+  selectedSort: Sorting.None,
   selectedCategory: Category.All,
 
   addExpenses: (expense) =>

@@ -1,13 +1,23 @@
 import { Outlet } from 'react-router-dom'
 import { Header } from '@/components/header'
 import styles from './styles.module.scss'
+import { useMediaQuery } from '@mui/material'
+import { PlugMedia } from '@/components/plug-media'
 
-export const MainLayout = () => (
-  <>
-    <Header />
+export const MainLayout = () => {
+  const isShowPlug = useMediaQuery('(max-width:1295px)')
 
-    <div className={styles.container}>
-      <Outlet />
-    </div>
-  </>
-)
+  if (isShowPlug) {
+    return <PlugMedia />
+  }
+
+  return (
+    <>
+      <Header />
+
+      <div className={styles.container}>
+        <Outlet />
+      </div>
+    </>
+  )
+}
